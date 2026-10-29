@@ -1,0 +1,52 @@
+HealMotion Wiring and Testing Notes
+
+ESP32 Wi-Fi
+- Mode: Access Point
+- SSID: HealMotion_ESP32
+- Default IP: 192.168.4.1
+- WebSocket endpoint: /ws
+
+I2C Sensors
+- SDA: GPIO21
+- SCL: GPIO22
+- MAX30102 address: 0x57
+- MLX90614 address: 0x5A
+
+Battery Monitor
+- Battery + -> 100k resistor -> ADC node -> 10k resistor -> Battery -
+- ADC node -> GPIO34
+- Never connect 24V directly to ESP32.
+- Use common ground for ESP32 measurement reference.
+- Calibrate BATTERY_CALIBRATION after checking with multimeter.
+
+BTS7960 #1 Conversion Motor
+- RPWM: GPIO25
+- LPWM: GPIO26
+- R_EN: GPIO27
+- L_EN: GPIO32
+- Motor supply: 24V through fuse, main switch, physical emergency stop, BTS7960.
+
+Command Safety
+- Conversion is hold-to-run only.
+- Browser sends START on pointerdown and STOP on release/cancel/blur/hidden.
+- ESP32 command watchdog stops motor if valid command stream stops.
+- Emergency stop locks controls until reset.
+- Software safety does not replace mechanical/physical safety.
+
+Testing Procedure
+1. Install required Arduino libraries.
+2. Upload firmware to ESP32.
+3. Connect phone/laptop Wi-Fi to HealMotion_ESP32.
+4. Open index.html or host the same files from laptop/ESP32.
+5. Enter 192.168.4.1 and press Connect.
+6. Confirm telemetry changes from -- to real readings.
+7. Unlock movement using movement password.
+8. Hold conversion button and verify motor stops immediately on release.
+9. Press Emergency Stop and confirm motor remains stopped.
+
+Future Drive Expansion
+- Add BTS7960 #2 for left drive motor.
+- Add BTS7960 #3 for right drive motor.
+- Add separate GPIO constants and MotorController-style functions.
+- Enable drive UI only after hardware is configured.
+- Keep interlock: conversion and drive must not operate together.

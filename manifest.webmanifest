@@ -1,0 +1,13 @@
+{
+  "name": "HealMotion",
+  "short_name": "HealMotion",
+  "description": "Real ESP32 health and convertible mobility control dashboard",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#041322",
+  "theme_color": "#061a2d",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "assets/healmotion-logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

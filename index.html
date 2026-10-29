@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#061a2d">
+  <title>HealMotion | Smart Health & Mobility</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="glow glow-blue"></div>
+  <div class="glow glow-green"></div>
+
+  <div class="app">
+    <header class="topbar glass">
+      <div class="brand">
+        <button class="menu-btn" id="adminOpen" type="button" aria-label="Open admin panel"><span></span><span></span><span></span></button>
+        <img class="logo" src="assets/healmotion-app-icon.png" alt="HealMotion app icon">
+        <div>
+          <p>Smart Health & Mobility</p>
+          <h1>HealMotion</h1>
+        </div>
+      </div>
+      <div class="top-pills">
+        <span class="pill danger" id="topConnection"><i></i>Disconnected</span>
+        <span class="pill" id="topBattery">Battery: --</span>
+        <span class="pill" id="clockText">--:--</span>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="hero glass">
+        <div>
+          <h2>Smart convertible bed-to-wheelchair control system.</h2>
+          <p class="hero-tagline">Built to Care.</p>
+          <p class="developer-credit">Developed by <strong>Krunal More</strong></p>
+        </div>
+        <div class="hero-brand-card">
+          <img src="assets/healmotion-symbol.png" alt="HealMotion mobility symbol">
+          <div class="hero-wordmark"><strong>Heal<span>Motion</span></strong><small>Smart Health & Mobility</small></div>
+        </div>
+      </section>
+
+      <section class="grid two">
+        <article class="card">
+          <div class="card-head">
+            <div><span class="eyebrow">Device Connection</span><h3>Connect to ESP32</h3></div>
+            <span class="chip danger" id="connectionChip">Disconnected</span>
+          </div>
+          <label for="esp32Ip">ESP32 IP address</label>
+          <div class="connect-row">
+            <input id="esp32Ip" value="192.168.4.1" inputmode="decimal" autocomplete="off">
+            <button class="primary" id="connectBtn" type="button">Connect</button>
+          </div>
+          <div class="mini-actions">
+            <button class="secondary" id="disconnectBtn" type="button">Disconnect</button>
+            <button class="secondary" id="clearLogBtn" type="button">Clear Log</button>
+          </div>
+          <p class="note" id="endpointText">Endpoint: ws://192.168.4.1/ws</p>
+          <div class="info-grid">
+            <div><span>Wi-Fi</span><strong id="wifiStatus">--</strong></div>
+            <div><span>WebSocket</span><strong id="socketStatus">Disconnected</strong></div>
+            <div><span>Device</span><strong>ESP32</strong></div>
+            <div><span>Health Sensors</span><strong id="sensorSummary">--</strong></div>
+            <div><span>Motor Controller</span><strong id="motorReady">Locked</strong></div>
+            <div><span>Mode</span><strong>Real Hardware</strong></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <div><span class="eyebrow">Patient Profile</span><h3 id="patientName">Patient</h3></div>
+            <span class="chip" id="wardChip">Ward --</span>
+          </div>
+          <div class="patient-row">
+            <div class="avatar" id="patientAvatar">P</div>
+            <div class="patient-info">
+              <p id="patientCondition">No patient condition added.</p>
+              <div class="info-grid">
+                <div><span>Age</span><strong id="patientAge">--</strong></div>
+                <div><span>Gender</span><strong id="patientGender">--</strong></div>
+                <div><span>Blood Group</span><strong id="patientBlood">--</strong></div>
+                <div><span>Caregiver</span><strong id="patientCaregiver">--</strong></div>
+                <div><span>Ward</span><strong id="patientWard">--</strong></div>
+                <div><span>System</span><strong id="patientSystem">Standby</strong></div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <div><span class="eyebrow">Live Health System</span><h3>Patient Monitoring</h3></div>
+          <span class="chip" id="lastUpdate">Last Update: --</span>
+        </div>
+        <div class="vitals">
+          <div class="vital" id="heartRateCard"><span>Heart Rate</span><strong id="heartRate">--</strong><small>BPM</small><em id="heartRateStatus">Waiting for ESP32</em></div>
+          <div class="vital" id="spo2Card"><span>SpO₂</span><strong id="spo2">--</strong><small>%</small><em id="spo2Status">Waiting for ESP32</em></div>
+          <div class="vital" id="bodyTempCard"><span>Body Temp</span><strong id="bodyTemperature">--</strong><small>°C</small><em id="bodyTempStatus">Waiting for ESP32</em></div>
+          <div class="vital" id="ambientTempCard"><span>Ambient Temp</span><strong id="ambientTemperature">--</strong><small>°C</small><em id="ambientTempStatus">Waiting for ESP32</em></div>
+          <div class="vital" id="batteryPercentCard"><span>Battery</span><strong id="batteryPercent">--</strong><small>% estimated</small><em id="batteryPercentStatus">Waiting for ESP32</em></div>
+          <div class="vital" id="batteryVoltageCard"><span>Battery Voltage</span><strong id="batteryVoltage">--</strong><small>V</small><em id="batteryVoltageStatus">Waiting for ESP32</em></div>
+        </div>
+        <p class="note">Alerts mean readings are outside configured thresholds. This interface is not a medical diagnosis device.</p>
+      </section>
+
+      <section class="grid controls">
+        <article class="card">
+          <div class="card-head">
+            <div><span class="eyebrow">Conversion Control</span><h3>Bed ↔ Wheelchair Mechanism</h3></div>
+            <span class="chip danger" id="conversionLockChip">Controls Locked</span>
+          </div>
+          <label for="movementPassword">Movement password</label>
+          <div class="unlock-row">
+            <input id="movementPassword" type="password" placeholder="Enter movement password">
+            <button class="primary" id="unlockMovementBtn" type="button">Unlock</button>
+            <button class="secondary" id="lockMovementBtn" type="button">Lock</button>
+          </div>
+          <div class="status-cards conversion-status-only">
+            <div><span>Status</span><strong id="conversionState">Disconnected</strong></div>
+            <div><span>Active Subsystem</span><strong id="activeSubsystem">IDLE</strong></div>
+          </div>
+          <div class="speed-box">
+            <div><span>Conversion Speed</span><strong id="speedValue">45%</strong></div>
+            <input id="speedSlider" type="range" min="0" max="100" value="45">
+            <div class="scale"><span>0%</span><span>40%</span><span>70%</span><span>100%</span></div>
+          </div>
+          <div class="hold-grid">
+            <button class="hold convert" id="convertWheelchairBtn" data-command="CONVERT_WHEELCHAIR_START" type="button" disabled><span>Hold to Convert</span><strong>TO WHEELCHAIR</strong></button>
+            <button class="hold return" id="returnBedBtn" data-command="CONVERT_BED_START" type="button" disabled><span>Hold to Return</span><strong>TO BED</strong></button>
+          </div>
+          <p class="note warm">Motor runs only while button is held. Release, disconnect, page hidden or emergency sends STOP.</p>
+        </article>
+
+        <article class="card drive-card">
+          <div class="card-head">
+            <div><span class="eyebrow">Drive Control</span><h3>Rear Wheel Drive</h3></div>
+            <span class="chip danger" id="driveLockChip">Drive Locked</span>
+          </div>
+          <label for="drivePassword">Drive password</label>
+          <div class="unlock-row drive-unlock-row">
+            <input id="drivePassword" type="password" placeholder="Enter drive password">
+            <button class="primary" id="unlockDriveBtn" type="button">Unlock</button>
+            <button class="secondary" id="lockDriveBtn" type="button">Lock</button>
+          </div>
+          <div class="drive-speed-box">
+            <div><span>Drive Speed</span><strong id="driveSpeedValue">50%</strong></div>
+            <input id="driveSpeedSlider" type="range" min="0" max="100" value="50">
+          </div>
+          <div class="joystick-pad" id="drivePanel">
+            <button class="joy-btn forward" data-drive-command="DRIVE_FORWARD" type="button" disabled>Forward</button>
+            <button class="joy-btn left" data-drive-command="DRIVE_LEFT" type="button" disabled>Left</button>
+            <button class="joy-btn stop" data-drive-command="DRIVE_STOP" type="button" disabled>Stop</button>
+            <button class="joy-btn right" data-drive-command="DRIVE_RIGHT" type="button" disabled>Right</button>
+            <button class="joy-btn reverse" data-drive-command="DRIVE_REVERSE" type="button" disabled>Reverse</button>
+          </div>
+          <p class="note">Left and right use differential rear-wheel logic. Drive speed is controlled from 0–100%.</p>
+        </article>
+      </section>
+
+      <section class="grid status-area">
+        
+
+        <article class="card emergency-card">
+          <div class="card-head"><div><span class="eyebrow">Safety</span><h3>Emergency Stop</h3></div><span class="chip" id="emergencyChip">Normal</span></div>
+          <button class="emergency" id="emergencyStopBtn" type="button">Emergency Stop</button>
+          <button class="reset" id="resetEmergencyBtn" type="button">Reset Emergency</button>
+          <p class="note">Final prototype should also have a physical emergency-stop circuit that cuts motor power.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-head"><div><span class="eyebrow">Event Log</span><h3>Command & Telemetry Log</h3></div></div>
+          <div class="event-log" id="eventLog"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="admin-drawer" id="adminDrawer">
+    <div class="drawer-head">
+      <div><span class="eyebrow">Admin Access</span><h3>HealMotion Settings</h3></div>
+      <button class="secondary" id="adminClose" type="button">Close</button>
+    </div>
+    <section id="adminLoginPanel">
+      <label for="adminPassword">Admin password</label>
+      <input id="adminPassword" type="password" placeholder="Enter admin password">
+      <button class="primary full" id="adminLoginBtn" type="button">Open Admin Panel</button>
+      <p class="note">Default first-use password: admin123. Change it after setup.</p>
+    </section>
+    <form id="adminForm" hidden>
+      <div class="form-grid">
+        <label>Patient Name<input id="formPatientName" type="text"></label>
+        <label>Age<input id="formAge" type="text"></label>
+        <label>Gender<input id="formGender" type="text"></label>
+        <label>Blood Group<input id="formBlood" type="text"></label>
+        <label>Caregiver<input id="formCaregiver" type="text"></label>
+        <label>Ward<input id="formWard" type="text"></label>
+        <label class="wide">Condition<input id="formCondition" type="text"></label>
+      </div>
+      <div class="admin-block">
+        <h4>Passwords</h4>
+        <label>New Movement Password<input id="formMovementPassword" type="password" placeholder="Leave blank to keep current"></label>
+        <label>New Admin Password<input id="formAdminPassword" type="password" placeholder="Leave blank to keep current"></label>
+      </div>
+      <div class="admin-block">
+        <h4>Alert Thresholds</h4>
+        <div class="form-grid compact">
+          <label>HR Low<input id="thresholdHrLow" type="number"></label>
+          <label>HR High<input id="thresholdHrHigh" type="number"></label>
+          <label>SpO₂ Low<input id="thresholdSpo2Low" type="number"></label>
+          <label>SpO₂ Critical<input id="thresholdSpo2Critical" type="number"></label>
+          <label>Temp High<input id="thresholdTempHigh" type="number" step="0.1"></label>
+          <label>Battery Low<input id="thresholdBatteryLow" type="number"></label>
+        </div>
+      </div>
+      <div class="admin-actions">
+        <button class="primary" type="submit">Save Changes</button>
+        <button class="secondary" id="clearPatientBtn" type="button">Clear Patient</button>
+        <button class="reset" id="adminLogoutBtn" type="button">Logout</button>
+      </div>
+    </form>
+  </aside>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
